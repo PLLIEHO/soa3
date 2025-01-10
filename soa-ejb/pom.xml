@@ -11,7 +11,7 @@
     <groupId>org.example</groupId>
     <artifactId>soa-ejb</artifactId>
     <version>1.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <build>
         <plugins>

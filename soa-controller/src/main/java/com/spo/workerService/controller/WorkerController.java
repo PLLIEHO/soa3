@@ -1,11 +1,13 @@
 package com.spo.workerService.controller;
 
+import com.google.common.net.HostAndPort;
 import com.orbitz.consul.AgentClient;
 import com.orbitz.consul.Consul;
 import com.orbitz.consul.NotRegisteredException;
 import com.orbitz.consul.model.agent.ImmutableRegistration;
 import com.orbitz.consul.model.agent.Registration;
 import com.spo.entity.dto.*;
+import io.undertow.attribute.HostAndPortAttribute;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.ws.rs.*;
@@ -29,38 +31,7 @@ public class WorkerController {
 
     private static final Log log = LogFactory.getLog(WorkerRepository.class);
 
-    private String serviceId = "";
 
-
-    @PostConstruct
-    public void init() throws NotRegisteredException {
-        Consul client = Consul.builder().build();
-        AgentClient agentClient = client.agentClient();
-
-        Random rn = new Random();
-        String id = rn.nextInt(10000 - 1 + 1) + 1 + "";
-
-        Registration reg = ImmutableRegistration.builder()
-                .id(id)
-                .name("soa-controller")
-                .port(18987)
-                .check(Registration.RegCheck.ttl(3L))
-                .build();
-
-        agentClient.register(reg);
-
-        agentClient.pass(id);
-
-        serviceId = id;
-    }
-
-    @PreDestroy
-    public void destroy(){
-        Consul client = Consul.builder().build();
-        AgentClient agentClient = client.agentClient();
-
-        agentClient.deregister(serviceId);
-    }
 
     public WorkerServiceRemote getWorkerService() {
         if (workerService != null){

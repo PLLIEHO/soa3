@@ -2,8 +2,10 @@ package com.spo.entity.entity;
 
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
-public enum EyeColor {
+public enum EyeColor implements Serializable {
     GREEN ("green"),
     WHITE ("white"),
     BROWN ("brown");

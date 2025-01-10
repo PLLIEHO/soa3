@@ -25,7 +25,7 @@ import java.util.*;
 @RequestScoped
 public class WorkerRepository {
 
-    @PersistenceContext(unitName = "default")
+    @PersistenceContext(unitName = "aboba")
     private EntityManager entityManager;
 
     private static final Log log = LogFactory.getLog(WorkerRepository.class);

@@ -1,6 +1,6 @@
 package org.example.util;
 
-import org.example.dto.Errors;
+import com.spo.entity.dto.Errors;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;

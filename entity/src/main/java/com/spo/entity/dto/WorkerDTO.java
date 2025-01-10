@@ -4,12 +4,13 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @Data
-public class WorkerDTO {
+public class WorkerDTO implements Serializable {
     private int id;
     private String name;
     private CoordinatesDTO coordinates;

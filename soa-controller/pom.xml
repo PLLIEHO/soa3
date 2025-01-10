@@ -3,9 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>se.ifmo.ru</groupId>
+        <artifactId>SOA</artifactId>
+        <version>1.0</version>
+    </parent>
     <groupId>com.example</groupId>
-    <artifactId>worker</artifactId>
+    <artifactId>soa-controller</artifactId>
     <version>0.0.1</version>
+    <packaging>war</packaging>
     <build>
         <plugins>
             <plugin>
@@ -74,11 +80,6 @@
             <version>8.0.1.Final</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.4</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api -->
         <dependency>
             <groupId>jakarta.enterprise</groupId>
@@ -117,20 +118,60 @@
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>soa-ejb</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.wildfly/wildfly-ejb-client-bom -->
         <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>soa-ejb</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-ejb-client-bom</artifactId>
+            <version>34.0.1.Final</version>
+            <type>pom</type>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jboss/jboss-remote-naming -->
         <dependency>
-            <groupId>com.spo</groupId>
-            <artifactId>entity</artifactId>
-            <version>0.0.1</version>
-            <scope>compile</scope>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-remote-naming</artifactId>
+            <version>2.0.4.Final</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-ejb-plugin -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-ejb-plugin</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.ejb/jakarta.ejb-api -->
+        <dependency>
+            <groupId>jakarta.ejb</groupId>
+            <artifactId>jakarta.ejb-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+
+
+
+        <!--        <dependency>-->
+<!--            <groupId>com.spo</groupId>-->
+<!--            <artifactId>entity</artifactId>-->
+<!--            <version>0.0.1</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
     </dependencies>
 </project>

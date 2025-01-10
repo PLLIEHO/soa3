@@ -1,0 +1,9 @@
+org/example/util/NotFoundExceptionHandler.class
+org/example/repository/WorkerRepository.class
+org/example/util/TestClient.class
+org/example/WorkerService.class
+org/example/util/NotAllowedExceptionHandler.class
+org/example/util/WorkerParser.class
+org/example/util/HttpFilter.class
+org/example/repository/EntityManagerProvider.class
+org/example/WorkerServiceRemote.class

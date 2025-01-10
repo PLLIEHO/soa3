@@ -7,7 +7,7 @@ import org.example.util.WorkerParser;
 import jakarta.inject.Inject;
 import org.jboss.ejb3.annotation.Pool;
 
-import javax.ejb.Stateless;
+import jakarta.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

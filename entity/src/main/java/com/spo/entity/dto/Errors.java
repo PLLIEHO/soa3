@@ -2,11 +2,12 @@ package com.spo.entity.dto;
 
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class Errors {
+public class Errors implements Serializable {
 
     List<Error> errors = new ArrayList<>();
 

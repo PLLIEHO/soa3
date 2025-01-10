@@ -2,7 +2,7 @@ package org.example;
 import com.spo.entity.dto.*;
 
 
-import javax.ejb.Remote;
+import jakarta.ejb.Remote;
 import java.util.List;
 
 @Remote

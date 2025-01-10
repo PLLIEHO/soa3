@@ -1,6 +1,7 @@
 package com.spo.workerService.controller;
 
 import com.spo.entity.dto.*;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -22,21 +23,30 @@ public class WorkerController {
     WorkerServiceRemote workerService;
 
     private static final Log log = LogFactory.getLog(WorkerRepository.class);
-
-    public WorkerController() {
-        Properties props = new Properties();
-        props.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
-        props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-        props.put("jboss.naming.client.ejb.context", true);
-        props.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
-
+    public WorkerServiceRemote getWorkerService() {
+        if (workerService != null){
+            return this.workerService;
+        }
+        Properties jndiProperties = new Properties();
+        jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
+        jndiProperties.put("jboss.naming.client.ejb.context", true);
+        jndiProperties.put("remote.connectionprovider.create.options.org.xnio.Options.SSL_ENABLED", false);
+        jndiProperties.put("remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMOUS", false);
+        jndiProperties.put("remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOPLAINTEXT", "false");
+        jndiProperties.put(Context.SECURITY_PRINCIPAL, "poouo");
+        jndiProperties.put(Context.SECURITY_CREDENTIALS, "123");
+        jndiProperties.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
         try {
-            InitialContext ctx = new InitialContext(props);
-            workerService = (WorkerServiceRemote) ctx.lookup("ejb:/soa-ejb/WorkerService!org.example.WorkerServiceRemote");
-        } catch (NamingException e) {
+            InitialContext ctx = new InitialContext(jndiProperties);
+            this.workerService = (WorkerServiceRemote) ctx.lookup("ejb:/soa-ejb-1.0/WorkerService!org.example.WorkerServiceRemote");
+            System.out.println("This is working SERVICE: " + workerService);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return this.workerService;
     }
+
+
 
 
     @GET
@@ -44,6 +54,7 @@ public class WorkerController {
                               @QueryParam("page_offset") Optional<Integer> pageOffset,
                               @QueryParam("sort") List<String> sort,
                               @QueryParam("filter") List<String> filter){
+            this.workerService = getWorkerService();
             GetRequest req = new GetRequest();
             req.setPageSize(pageSize.orElse(0));
             if (req.getPageSize() < 0){
@@ -68,6 +79,7 @@ public class WorkerController {
 
     @POST
     public Response createWorker(CreateWorkerDTO worker){
+        this.workerService = getWorkerService();
         log.info("Get post request");
         var res = workerService.createWorker(worker);
         return createResponse(res, 200);
@@ -75,6 +87,7 @@ public class WorkerController {
     @GET
     @Path("/{worker-id}")
     public Response getWorker(@PathParam("worker-id") String workerId){
+        this.workerService = getWorkerService();
         log.info("Get get request");
         try{
             Integer.parseInt(workerId);
@@ -88,6 +101,7 @@ public class WorkerController {
     @DELETE
     @Path("/{worker-id}")
     public Response deleteWorker(@PathParam("worker-id") String workerId){
+        this.workerService = getWorkerService();
         log.info("Get delete request");
         try{
             Integer.parseInt(workerId);
@@ -101,6 +115,7 @@ public class WorkerController {
     @PATCH
     @Path("/{worker-id}")
     public Response patchWorker(@PathParam("worker-id") String workerId, EditWorkerDTO worker){
+        this.workerService = getWorkerService();
         log.info("Get patch request");
         int workId;
         try{
@@ -115,6 +130,7 @@ public class WorkerController {
     @GET
     @Path("/salary")
     public Response getSalary(){
+        this.workerService = getWorkerService();
         log.info("Get salary request");
         var res = workerService.getSalary();
         return createResponse(res, 200);
@@ -123,6 +139,7 @@ public class WorkerController {
     @POST
     @Path("/person")
     public Response findCountWorkers(FindPersonDTO personDTO){
+        this.workerService = getWorkerService();
         log.info("Get person request");
         var res = workerService.findCountWorkers(personDTO);
         return createResponse(res, 200);

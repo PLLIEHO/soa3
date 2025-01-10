@@ -2,8 +2,10 @@ package com.spo.entity.entity;
 
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
-public enum Status {
+public enum Status implements Serializable {
     FIRED("fired"),
     HIRED("hired"),
     RECOMMENDED_FOR_PROMOTION("recommended_for_promotion"),

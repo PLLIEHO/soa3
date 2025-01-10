@@ -34,19 +34,19 @@ public class main extends Application {
         String id = rn.nextInt(10000 - 1 + 1) + 1 + "";
         String req = String.format("""
                 {
-                                           "ID": "%s",
-                                           "Name": "testservice",
-                                           "Tags": [
+                                           "id": "%s",
+                                           "name": "testservice",
+                                           "tags": [
                                              "primary"
                                            ],
                                            "port": 8080,
-                                           "Address": "localhost",
-                                           "check": {
-                                           "name": "Worker check",
-                                           "http": "http://localhost:8080",
-                                           "method": "GET",
-                                           "interval": "10s"
-                                           }
+                                           "address": "localhost",
+                                           "checks": [{
+                                            "name": "Worker check http",
+                                            "http": "http://localhost:8080/api/workers/health",
+                                            "method": "GET",
+                                            "interval": "10s"
+                                           }]
                          }
         
         """, id);
@@ -55,34 +55,26 @@ public class main extends Application {
         Response response = client
                 .target(target)
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(req, MediaType.APPLICATION_JSON));
-        System.out.println("ИНДУСЫ ВПЕРЕД");
-//        Consul client = Consul.builder().withHostAndPort(HostAndPort.fromParts("localhost", 18987)).build();
-//        AgentClient agentClient = client.agentClient();
-//
-//        Registration reg = ImmutableRegistration.builder()
-//                .id(id)
-//                .name("soa-controller")
-//                .port(8080)
-//                .check(Registration.RegCheck.ttl(3L))
-//                .build();
-//
-//        agentClient.register(reg);
-//
-//        agentClient.pass(id);
+                .put(Entity.entity(req, MediaType.APPLICATION_JSON));
+
+        System.out.println(req);
 
         serviceId = id;
     }
 
-//    @PreDestroy
-//    public void destroy(){
-//        System.out.println("ИНДУСЫ НАЗАД");
-//
-//        Consul client = Consul.builder().withHostAndPort(HostAndPort.fromParts("localhost", 18987)).build();
-//        AgentClient agentClient = client.agentClient();
-//
-//        agentClient.deregister(serviceId);
-//    }
+
+    @PreDestroy
+    public void destroy() {
+        Client client = ClientBuilder.newClient();
+        String target = "http://localhost:18987/v1/agent/service/deregister" + serviceId;
+
+        System.out.println(serviceId);
+
+        Response response = client
+                .target(target)
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.json(null));
+    }
 
 
 }

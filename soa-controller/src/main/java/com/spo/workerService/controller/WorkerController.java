@@ -87,6 +87,12 @@ public class WorkerController {
         
     }
 
+    @GET
+    @Path("/health")
+    public Response getHealth(){
+        return Response.ok("OK").build();
+    }
+
     @POST
     public Response createWorker(CreateWorkerDTO worker){
         this.workerService = getWorkerService();
